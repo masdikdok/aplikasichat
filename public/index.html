@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="charset" content="utf-8">
+		<meta name="author" content="Dicki Andrea">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Latihan WebSocket</title>
+		<link href="/style.css" rel="stylesheet" type="text/css">
+		<link href="/bootstrap.min.css" rel="stylesheet" type="text/css">
+	</head>	
+	<body>
+		<div class="jumbotron" style="padding: 0px !important;">
+			<div class="container">
+				<h1>Aplikasi Chat Sederhana</h1>
+				<p>Aplikasi ini dibuat menggunakan Node.js, Socket.io, Express.js, jQuery dan Bootstrap. <small>Dibuat oleh <kbd>Masdikdok</kbd></small></p>
+			</div>			
+		</div>
+		<div class="container-fluid">
+			<div class="col-sm-4 col-md-2" style="border-right: 4px solid darkgrey;" >			
+				<p>
+					You are : <hr><b><span class="myusername">None</span></b>
+					<span class="label label-danger pull-right" style="cursor: pointer;width: 30px;height: 20px;line-height: 15px;" onclick="logout()">x</span>
+				</p>
+				<div class="panel panel-default">
+					<div class="panel-heading">						
+						<h4>User Online <span class="badge pull-right" id="jumlahOnline"></span></h4>						
+					</div>					
+					<div class="panel-body" style="padding: 2px !important;max-height: 200px;overflow:auto;">
+						<ul class="list-group" id="userOnline">							
+							<li class="list-group-item btn disabled">-</li>
+						</ul>
+					</div>
+				</div>				
+			</div>
+			<div class="col-sm-8 col-md-5" style="border-right: 4px solid darkgrey;">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4>Chat Private <small>With </small><span id="penerima">None</span></h4>
+					</div>
+					<div class="panel-body" style="padding: 0px !important;">
+						<div class="chat-window">
+							<div class="output" id="outputChatPrivate"></div>
+							<div class="feedback" id="feedbackChatPrivate"></div>
+						</div>
+					</div>
+					<div class="form-horizontal" style="margin: 0px !important;">
+						<div class="form-group" style="margin: 0px 0px 4px 0px !important;">
+							<div class="col-xs-12 col-sm-9">
+								<input type="text" class="form-control" id="isiChatPrivate" placeholder="Ketik pesan..." disabled>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<button class="btn btn-primary btn-block" id="btnChatPrivate" disabled>Kirim</button>
+							</div>							
+						</div>
+					</div>
+				</div>											
+			</div>
+			<div class="col-sm-12 col-md-5">
+				<div id="mario-chat" style="background-color: #cecfd8;">
+					<h4 style="padding-left: 20px;">Grup Chat (<small> you as </small><span class="myusername">None</span> )</h4>
+					<div class="chat-window">
+						<div class="output" id="outputChatGrup"></div>
+						<div class="feedback" id="feedbackChatGrup"></div>
+					</div>					
+					<input id="isiChatGrup" type="text" placeholder="Message"/>
+					<button id="btnChatGrup" class="btn btn-primary btn-block">Send</button>
+				</div>
+			</div>
+		</div>	
+
+		<script src="/jquery.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/chat.js"></script>
+	</body>
+</html>
