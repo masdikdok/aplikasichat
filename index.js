@@ -25,10 +25,8 @@ function cekSedangMengetik(v){
 	return userMengetik;
 }
 
-function hapusArray(array, v){	
-	array.filter((item) => {
-		return item !== v;
-	});	
+function hapusArray(array, v){
+	return array.filter(item => item != v);
 }
 
 function cekUser(v){
@@ -42,7 +40,7 @@ function cekUser(v){
 }
 
 io.on('connection', (socket) =>{
-	
+
 	socket.on('userConnect', (data) => {
 		if(cekUser(data) === ''){
 			socket.username = data;
@@ -52,21 +50,21 @@ io.on('connection', (socket) =>{
 				'userName' : data,
 				'userID' : socket.id
 			});
-			
+
 			io.emit('updateUser', {
 				'jumlahUser' : jumlahUser,
 				'kumpulanUser': kumpulanUser
 			});
-					
+
 			console.log(kumpulanUser);
 			console.log(jumlahUser);
-			
+
 		}else{
 			console.log(kumpulanUser);
 			socket.emit('userExist', 'userName "' + data + '" sudah ada sebelumnya !!');
 		}
 	});
-	
+
 	socket.on('reloadData', (data) => {
 		if(cekUser(data.userNameSocket) === ''){
 			kumpulanUser[data.userNameSocket] = data.userIDSocket;
@@ -75,37 +73,36 @@ io.on('connection', (socket) =>{
 		io.emit('updateUser', {
 			'jumlahUser' : jumlahUser,
 			'kumpulanUser': kumpulanUser
-		});	
+		});
 
 		console.log(kumpulanUser);
 		console.log(jumlahUser);
 	});
-	
+
 	socket.on('userLogout', (data) => {
 		delete kumpulanUser[data.userName];
 		if(jumlahUser != 0){
 			jumlahUser--;
-		}		
+		}
 		io.emit('updateUser', {
 			'jumlahUser' : jumlahUser,
 			'kumpulanUser': kumpulanUser
 		});
-		
-		io.emit('laporanLogout', true);		
+
+		io.emit('laporanLogout', true);
 		io.emit('cekChatPrivate', data.userName);
-		
+
 		console.log(data.userName + " with userID = " + data.userID+ " has been disconnect.");
-		console.log(kumpulanUser);
 	});
-	
+
 	socket.on('grupKeypress',(data) =>{
 		socket.broadcast.emit('ongrupKeypress', cekSedangMengetik(data));
 	});
-	
+
 	socket.on('kirimPesanGrup', (data) => {
-		hapusArray(userMengetik, data.pengirim);
+		userMengetik = hapusArray(userMengetik, data.pengirim);
 		socket.broadcast.emit('ongrupKeypress', userMengetik);
 		io.emit('pesanGrup', data);
 	})
-		
+
 });

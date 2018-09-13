@@ -2,9 +2,10 @@
 let socket = io.connect('http://localhost:4000');
 
 let myUsername = '';
+let userMengetik = [];
 
 function loggin(){
-	if (typeof(Storage) !== "undefined") {	
+	if (typeof(Storage) !== "undefined") {
 		if(localStorage.userIDSocket == null && localStorage.userNameSocket == null){
 			let pertama = prompt("Siapa nama Anda? ");
 			if(pertama != null){
@@ -18,14 +19,14 @@ function loggin(){
 			socket.emit('reloadData', {
 				'userNameSocket' : localStorage.userNameSocket,
 				'userIDSocket' : localStorage.userIDSocket
-			});			
+			});
 			$("span.myusername").html(myUsername);
-			$("span.myusername").html(myUsername);			
-			$("#userOnline li:first").html(myUsername);			
-		}	
+			$("span.myusername").html(myUsername);
+			$("#userOnline li:first").html(myUsername);
+		}
 	} else {
 		alert("Browser anda tidak mendukung untuk menyimpan data pribadi anda. \nKemungkinan data pribadi akan terus hilang.\nSilahkan lanjutkan..");
-	}	
+	}
 }
 
 function logout(){
@@ -35,31 +36,31 @@ function logout(){
 			'userID' : localStorage.userIDSocket
 		});
 		localStorage.removeItem
-	}		
+	}
 }
 
 $(function(){
 	socket.on('connect', () => {
 		loggin();
-	});		
-	
+	});
+
 	socket.on('laporanLogout', (data) =>{
 		if(data == true){
 			localStorage.removeItem('userNameSocket');
 			localStorage.removeItem('userIDSocket');
-			alert("Logout berhasil!!");			
+			alert("Logout berhasil!!");
 			window.open("about:blank",'_self').close();
 		}
 	});
-	
-	socket.on('setUser', (data) => {		
+
+	socket.on('setUser', (data) => {
 		localStorage.setItem('userIDSocket', data.userID);
 		localStorage.setItem('userNameSocket', data.userName);
 		$("span.myusername").html(data.userName);
 		$("#userOnline li:first").html(data.userName);
 		myUsername = data.userName;
 	})
-	
+
 	socket.on('updateUser', (data) =>{
 		$("#jumlahOnline").html(data.jumlahUser);
 		$('ul#userOnline li').not('li:first').remove();
@@ -69,7 +70,7 @@ $(function(){
 			}
 		});
 	});
-	
+
 	socket.on('userExist', (data) => {
 		if(confirm(data + "\nMau coba lagi dengan nama lain?")){
 			loggin();
@@ -77,7 +78,7 @@ $(function(){
 			window.open("about:blank",'_self').close();
 		}
 	});
-	
+
 	socket.on('cekChatPrivate', (data) => {
 		if($('span#penerima').text() == data){
 			$('span#penerima').html('None');
@@ -85,19 +86,21 @@ $(function(){
 			$('#btnChatPrivate').attr("disabled", "disabled");
 		}
 	});
-	
+
+	// Menampilkan keterangan "sedang mengetik" ketika user sedang mengetik
 	$('#isiChatGrup').on('keypress', () => {
 		socket.emit('grupKeypress', myUsername);
 	});
-	
+
 	socket.on('ongrupKeypress', (data) => {
-		if(data.length == 0){
+		userMengetik = data.filter(item => item != myUsername);
+		if(userMengetik.length == 0){
 			$('#feedbackChatGrup').html('');
 		}else{
-			$('#feedbackChatGrup').html('<p><em>'+ data +' sedang mengetik..</em></p>');
+			$('#feedbackChatGrup').html('<p><em>'+ userMengetik.join(', ') +' sedang mengetik..</em></p>');
 		}
 	});
-	
+
 	$('#btnChatGrup').on('click', () => {
 		if($('#isiChatGrup').val() == ''){
 			alert("Pesan tidak boleh kosong!");
@@ -109,13 +112,13 @@ $(function(){
 			$('#isiChatGrup').val('');
 		}
 	});
-	
+
 	socket.on('pesanGrup', (data) => {
 		if(data.pengirim == myUsername){
 			$('#outputChatGrup').append('<p style="text-align: right;"> '+ data.pesan + ' : <b>' + data.pengirim + ' </b></p>');
 		}else{
 			$('#outputChatGrup').append('<p><b>' + data.pengirim + ' </b> : '+ data.pesan + '</p>');
-		}	
+		}
 	});
 });
 
