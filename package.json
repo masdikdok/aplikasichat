@@ -9,8 +9,9 @@
   "author": "masdikdok",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
-    "socket.io": "^2.1.1"
+    "express": "^4.17.1",
+    "nodemon": "^1.19.2",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
