@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "mixin-deep": "^2.0.1",
     "nodemon": "^1.19.2",
+    "set-value": "^3.0.1",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
