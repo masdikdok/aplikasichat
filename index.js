@@ -56,11 +56,7 @@ io.on('connection', (socket) =>{
 				'kumpulanUser': kumpulanUser
 			});
 
-			console.log(kumpulanUser);
-			console.log(jumlahUser);
-
 		}else{
-			console.log(kumpulanUser);
 			socket.emit('userExist', 'userName "' + data + '" sudah ada sebelumnya !!');
 		}
 	});
@@ -75,8 +71,6 @@ io.on('connection', (socket) =>{
 			'kumpulanUser': kumpulanUser
 		});
 
-		console.log(kumpulanUser);
-		console.log(jumlahUser);
 	});
 
 	socket.on('userLogout', (data) => {
@@ -92,7 +86,6 @@ io.on('connection', (socket) =>{
 		io.emit('laporanLogout', true);
 		io.emit('cekChatPrivate', data.userName);
 
-		console.log(data.userName + " with userID = " + data.userID+ " has been disconnect.");
 	});
 
 	socket.on('grupKeypress',(data) =>{
