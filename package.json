@@ -1,21 +1,22 @@
 {
-  "name": "latwebsocket",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "masdikdok",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mixin-deep": "^2.0.1",
-    "nodemon": "^1.19.2",
-    "set-value": "^3.0.1",
-    "socket.io": "^2.2.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.3"
-  }
+    "name": "latwebsocket",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "masdikdok",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mixin-deep": "^2.0.1",
+        "nodemon": "^1.19.2",
+        "set-value": "^3.0.1",
+        "socket.io": "^2.2.0"
+    },
+    "devDependencies": {
+        "nodemon": "^1.18.3"
+    }
 }
