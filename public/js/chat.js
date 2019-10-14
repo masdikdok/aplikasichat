@@ -1,5 +1,5 @@
 // Membuat koneksi
-let socket = io.connect('http://localhost:4000');
+let socket = io.connect(document.location.origin);
 
 let myUsername = '';
 let userMengetik = [];

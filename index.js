@@ -2,13 +2,14 @@ let express = require('express');
 let app = express();
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
+var port = process.env.PORT || 1997;
 
 // Static Files
 app.use(express.static(__dirname+ '/public'));
 
 // App setup
-server.listen(4000, () =>{
-	console.log("Berhasil merequest server di port 4000 !!");
+server.listen(port, () =>{
+	console.log("Berhasil merequest server di port " + port + " !! ");
 });
 
 
